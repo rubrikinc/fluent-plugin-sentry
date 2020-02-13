@@ -9,7 +9,6 @@ module Fluent
 
     include Fluent::HandleTagNameMixin
 
-    LOG_LEVEL = %w(fatal error warn warning info debug).to_set()
     EVENT_KEYS = %w(message msg timestamp level logger).to_set()
     DEFAULT_HOSTNAME_COMMAND = 'hostname'
 
@@ -31,17 +30,7 @@ module Fluent
         raise Fluent::ConfigError, "sentry: missing parameter for 'endpoint_url'"
       end
 
-      unless LOG_LEVEL.include?(@default_level)
-        raise Fluent::ConfigError, "sentry: unsupported default reporting log level for 'default_level'"
-      end
- 
       @report_levels = @report_levels.to_set()
-      @report_levels.each do |report_level|
-        unless LOG_LEVEL.include?(report_level)
-          raise Fluent::ConfigError, "sentry: unsupported level in report_levels for 'report_level'"
-        end
-      end
-
       @tags_key = @tags_key.to_set()
 
       @userid_key_patterns = []
