@@ -62,6 +62,10 @@ module Fluent
     def shutdown
       super
     end
+    
+    def multi_workers_ready?
+      true
+    end
 
     def write(chunk)
       chunk.msgpack_each do |tag, time, record|
